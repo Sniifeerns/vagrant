@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Configuración de la box base
+  config.vm.box = "ubuntu/focal64"
+  config.vm.hostname = "lamp-server"
+  
+  # Configuración de red
+  # IP privada fija
+  config.vm.network "private_network", ip: "192.168.56.100"
+  # Redirección de puerto HTTP: host:8080 -> guest:80
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  
+  # Configuración de recursos de la VM
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "LAMP-Server"
+    vb.memory = "2048"
+    vb.cpus = 2
+  end
+  
+  # Carpeta compartida: www local -> /var/www/html en la VM
+  config.vm.synced_folder "./www", "/var/www/html",
+    create: true,
+    owner: "www-data",
+    group: "www-data"
+  
+  # Provisioning: ejecución de scripts de instalación
+  config.vm.provision "shell", path: "scripts/install-apache.sh"
+  config.vm.provision "shell", path: "scripts/install-mysql.sh"
+  config.vm.provision "shell", path: "scripts/install-php.sh"
+end
+
