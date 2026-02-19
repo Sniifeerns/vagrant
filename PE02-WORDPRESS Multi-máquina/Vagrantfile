@@ -1,0 +1,51 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# 
+# PE02 - Infraestructura WordPress Multi-máquina
+# Configuración de Vagrant para WordPress con separación de servicios
+#
+
+# Variables
+SUBNET = "192.168.56"
+WEB_IP = "#{SUBNET}.10"
+DB_IP = "#{SUBNET}.20"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+
+  # === DB SERVER (primero para que esté listo) ===
+  config.vm.define "db" do |db|
+    db.vm.hostname = "db-server"
+    db.vm.network "private_network", ip: DB_IP
+
+    db.vm.provider "virtualbox" do |vb|
+      vb.name = "WP-Database"
+      vb.memory = "2048"
+    end
+
+    db.vm.provision "shell", path: "scripts/common.sh"
+    db.vm.provision "shell", path: "scripts/install-db.sh"
+  end
+
+  # === WEB SERVER ===
+  config.vm.define "web", primary: true do |web|
+    web.vm.hostname = "web-server"
+    web.vm.network "private_network", ip: WEB_IP
+    web.vm.network "forwarded_port", guest: 80, host: 8080
+
+    web.vm.provider "virtualbox" do |vb|
+      vb.name = "WP-WebServer"
+      vb.memory = "1024"
+    end
+
+    web.vm.provision "shell", path: "scripts/common.sh"
+    web.vm.provision "shell", path: "scripts/install-web.sh"
+    web.vm.provision "shell", path: "scripts/configure-wordpress.sh", env: {
+      "DB_HOST" => DB_IP,
+      "DB_NAME" => "wordpress_db",
+      "DB_USER" => "wp_user",
+      "DB_PASS" => "wp_secure_pass"
+    }
+  end
+end
+
