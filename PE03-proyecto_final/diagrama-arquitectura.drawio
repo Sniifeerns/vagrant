@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net" modified="2026-03-03T22:00:00.000Z" agent="draw.io" version="22.0.0" type="device">
+  <diagram name="CI/CD Architecture" id="cicd-architecture">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Red Privada container -->
+        <mxCell id="red" value="Red Privada 192.168.56.0/24" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=14;verticalAlign=top;align=center;spacingTop=5;dashed=1;dashPattern=5 5;" vertex="1" parent="1">
+          <mxGeometry x="230" y="140" width="780" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- HOST label -->
+        <mxCell id="host-label" value="HOST (Windows)" style="text;html=1;fontSize=13;fontStyle=1;fillColor=none;align=center;verticalAlign=middle;strokeColor=none;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="140" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Desarrollador -->
+        <mxCell id="dev" value="&#xa;Desarrollador&#xa;(git push)" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="230" width="100" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Navegador -->
+        <mxCell id="browser" value="&#xa;Navegador" style="shape=mxgraph.cisco.computers_and_peripherals.web_browser;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;sketch=0;" vertex="1" parent="1">
+          <mxGeometry x="60" y="420" width="100" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- ===== VM 1: GITEA ===== -->
+        <mxCell id="vm1-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="270" y="190" width="200" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="vm1-title" value="VM 1 - Gitea" style="text;html=1;fontSize=14;fontStyle=1;fillColor=#f4a261;align=center;verticalAlign=middle;strokeColor=#e76f51;rounded=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="295" y="200" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gitea-icon" value="" style="shape=image;imageAlign=center;image=https://about.gitea.com/gitea.png;imageWidth=48;imageHeight=48;" vertex="1" parent="1">
+          <mxGeometry x="345" y="240" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gitea-info" value="&lt;b&gt;Gitea&lt;/b&gt;&lt;br&gt;Servidor Git&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#666&quot;&gt;IP: 192.168.56.10&lt;br&gt;Puerto: 3000&lt;br&gt;Host: localhost:3000&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#888&quot; size=&quot;1&quot;&gt;Usuario: gitea_admin&lt;br&gt;Pass: gitea_admin&lt;/font&gt;" style="text;html=1;fontSize=12;align=center;verticalAlign=top;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="285" y="295" width="170" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- ===== VM 2: JENKINS ===== -->
+        <mxCell id="vm2-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="520" y="190" width="200" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="vm2-title" value="VM 2 - Jenkins" style="text;html=1;fontSize=14;fontStyle=1;fillColor=#457b9d;align=center;verticalAlign=middle;strokeColor=#1d3557;rounded=1;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="545" y="200" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="jenkins-icon" value="" style="shape=image;imageAlign=center;image=https://www.jenkins.io/images/logos/jenkins/jenkins.png;imageWidth=48;imageHeight=48;" vertex="1" parent="1">
+          <mxGeometry x="595" y="240" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="jenkins-info" value="&lt;b&gt;Jenkins&lt;/b&gt;&lt;br&gt;CI/CD Server&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#666&quot;&gt;IP: 192.168.56.20&lt;br&gt;Puerto: 8080&lt;br&gt;Host: localhost:8080&lt;/font&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#888&quot; size=&quot;1&quot;&gt;Usuario: admin&lt;br&gt;Pass: admin&lt;/font&gt;" style="text;html=1;fontSize=12;align=center;verticalAlign=top;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="535" y="295" width="170" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- ===== VM 3: DEPLOY ===== -->
+        <mxCell id="vm3-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="770" y="190" width="200" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="vm3-title" value="VM 3 - Deploy" style="text;html=1;fontSize=14;fontStyle=1;fillColor=#2a9d8f;align=center;verticalAlign=middle;strokeColor=#264653;rounded=1;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="795" y="200" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="deploy-icon" value="" style="shape=image;imageAlign=center;image=https://raw.githubusercontent.com/docker-library/docs/01c12653951b2fe592c1f93a13b4e289ada0e3a1/nginx/logo.png;imageWidth=48;imageHeight=48;" vertex="1" parent="1">
+          <mxGeometry x="845" y="240" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="deploy-info" value="&lt;b&gt;Nginx&lt;/b&gt;&lt;br&gt;Web Server&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#666&quot;&gt;IP: 192.168.56.30&lt;br&gt;Puerto: 80&lt;br&gt;Host: localhost:8888&lt;/font&gt;" style="text;html=1;fontSize=12;align=center;verticalAlign=top;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="785" y="295" width="170" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- ===== FLECHAS ===== -->
+
+        <!-- 1. Desarrollador -> Gitea -->
+        <mxCell id="arrow1" value="1. git push" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.35;entryDx=0;entryDy=0;strokeColor=#e76f51;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#e76f51;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="dev" target="vm1-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 2. Gitea -> Jenkins -->
+        <mxCell id="arrow2" value="2. Webhook /&#xa;Poll SCM" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.35;exitDx=0;exitDy=0;entryX=0;entryY=0.35;entryDx=0;entryDy=0;strokeColor=#457b9d;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#457b9d;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="vm1-box" target="vm2-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 3. Jenkins -> Deploy -->
+        <mxCell id="arrow3" value="3. SCP via SSH&#xa;(clave ed25519)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.35;exitDx=0;exitDy=0;entryX=0;entryY=0.35;entryDx=0;entryDy=0;strokeColor=#2a9d8f;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#2a9d8f;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="vm2-box" target="vm3-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 4. Navegador -> Deploy -->
+        <mxCell id="arrow4" value="4. HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;strokeColor=#82b366;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#82b366;labelBackgroundColor=#FFFFFF;dashed=1;" edge="1" parent="1" source="browser" target="vm3-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Título -->
+        <mxCell id="title" value="PE03 - Entorno CI/CD (Opción C)" style="text;html=1;fontSize=20;fontStyle=1;fillColor=none;align=center;verticalAlign=middle;strokeColor=none;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="330" y="60" width="500" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Gitea + Jenkins + Nginx | Vagrant + VirtualBox | Ubuntu 22.04" style="text;html=1;fontSize=12;fontStyle=0;fillColor=none;align=center;verticalAlign=middle;strokeColor=none;fontColor=#888888;" vertex="1" parent="1">
+          <mxGeometry x="330" y="95" width="500" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Leyenda -->
+        <mxCell id="legend-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#cccccc;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="560" width="700" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="&lt;b&gt;Flujo CI/CD:&lt;/b&gt;  Desarrollador hace &lt;font color=&quot;#e76f51&quot;&gt;&lt;b&gt;git push&lt;/b&gt;&lt;/font&gt; → Gitea notifica via &lt;font color=&quot;#457b9d&quot;&gt;&lt;b&gt;Webhook&lt;/b&gt;&lt;/font&gt; → Jenkins despliega por &lt;font color=&quot;#2a9d8f&quot;&gt;&lt;b&gt;SCP/SSH&lt;/b&gt;&lt;/font&gt; → Web actualizada en &lt;font color=&quot;#82b366&quot;&gt;&lt;b&gt;Nginx&lt;/b&gt;&lt;/font&gt;" style="text;html=1;fontSize=12;fillColor=none;align=center;verticalAlign=middle;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="280" y="565" width="680" height="45" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

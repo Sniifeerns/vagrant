@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PE03 - CI/CD Pipeline</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 650px;
+            width: 90%;
+            text-align: center;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 2.2em;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 15px 0;
+            text-align: left;
+            border-radius: 0 8px 8px 0;
+        }
+        .info-box strong {
+            color: #667eea;
+        }
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 5px;
+        }
+        .badge.green { background: #28a745; }
+        .badge.orange { background: #fd7e14; }
+        .success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+        .flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .flow-item {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        .version {
+            color: #aaa;
+            font-size: 0.8em;
+            margin-top: 20px;
+        }
+        .hostname {
+            color: #764ba2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>&#x1F680; CI/CD Pipeline</h1>
+        <p class="subtitle">Proyecto Final PE03 - Opción C: Integración Continua</p>
+
+        <div class="info-box">
+            <strong>&#x1F4E1; Infraestructura:</strong><br>
+            <span class="badge">Gitea (Git)</span>
+            <span class="badge green">Jenkins (CI/CD)</span>
+            <span class="badge orange">Nginx (Deploy)</span>
+        </div>
+
+        <div class="info-box">
+            <strong>&#x1F310; Red de máquinas:</strong><br>
+            <code>192.168.56.10</code> - Gitea (puerto 3000)<br>
+            <code>192.168.56.20</code> - Jenkins (puerto 8080)<br>
+            <code>192.168.56.30</code> - Deploy/Nginx (puerto 80)
+        </div>
+
+        <div class="info-box">
+            <strong>&#x1F504; Flujo CI/CD:</strong>
+            <div class="flow">
+                <div class="flow-item">&#x1F4BB; Push</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-item">&#x1F4E6; Gitea</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-item">&#x2699;&#xFE0F; Jenkins</div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-item">&#x1F680; Deploy</div>
+            </div>
+        </div>
+
+        <div class="success">
+            &#x2705; Desplegado automáticamente via Jenkins Pipeline
+        </div>
+
+        <p class="version">v1.0.0 - Desplegado automáticamente desde Gitea → Jenkins → Nginx</p>
+    </div>
+</body>
+</html>

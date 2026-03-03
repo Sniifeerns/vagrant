@@ -1,0 +1,38 @@
+# ============================================================
+# PE03 - Proyecto Final: Entorno CI/CD
+# Archivo de configuración externa (variables)
+# Modificar estos valores para personalizar la infraestructura
+# ============================================================
+
+# --- Servidor Git (Gitea) ---
+gitea:
+  hostname: gitea
+  ip: "192.168.56.10"
+  ram: 1024
+  cpu: 1
+  port_guest: 3000
+  port_host: 3000
+  admin_user: gitea_admin
+  admin_password: gitea_admin
+  admin_email: admin@local.dev
+  repo_name: mi-web
+
+# --- Servidor CI/CD (Jenkins) ---
+jenkins:
+  hostname: jenkins
+  ip: "192.168.56.20"
+  ram: 2048
+  cpu: 2
+  port_guest: 8080
+  port_host: 8080
+  admin_user: admin
+  admin_password: admin
+
+# --- Servidor de Despliegue (Nginx) ---
+deploy:
+  hostname: deploy
+  ip: "192.168.56.30"
+  ram: 1024
+  cpu: 1
+  port_guest: 80
+  port_host: 8888

@@ -1,0 +1,110 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# ============================================================
+# PE03 - Proyecto Final: Entorno de Integración Continua (CI/CD)
+# Opción C: Gitea + Jenkins + Servidor de Despliegue
+#
+# Arquitectura:
+#   Desarrollador → Gitea (Git) → Jenkins (CI/CD) → Deploy (Nginx)
+#
+# Uso: vagrant up
+# ============================================================
+
+require 'yaml'
+
+# Cargar configuración desde archivo externo (config.yml)
+# Esto permite cambiar IPs, RAM, puertos, etc. sin tocar el Vagrantfile
+config_data = YAML.load_file(File.join(File.dirname(__FILE__), 'config.yml'))
+
+Vagrant.configure("2") do |config|
+
+  # Box base para todas las VMs: Ubuntu 22.04 LTS (Jammy Jellyfish)
+  config.vm.box = "ubuntu/jammy64"
+
+  # ============================================================
+  # VM 1: Servidor de Despliegue (se provisiona primero)
+  # Instala Nginx y prepara el servidor para recibir despliegues
+  # Se define primero para que las claves SSH estén listas
+  # cuando Jenkins se provisione después
+  # ============================================================
+  config.vm.define "deploy" do |deploy|
+    deploy.vm.hostname = config_data['deploy']['hostname']
+    deploy.vm.network "private_network", ip: config_data['deploy']['ip']
+    deploy.vm.network "forwarded_port", guest: config_data['deploy']['port_guest'],
+                                        host: config_data['deploy']['port_host']
+
+    deploy.vm.provider "virtualbox" do |vb|
+      vb.name   = "PE03-deploy"
+      vb.memory = config_data['deploy']['ram']
+      vb.cpus   = config_data['deploy']['cpu']
+    end
+
+    # Provisioning: primero lo común, luego lo específico
+    deploy.vm.provision "shell", path: "scripts/common.sh"
+    deploy.vm.provision "shell", path: "scripts/deploy.sh"
+  end
+
+  # ============================================================
+  # VM 2: Gitea (Servidor Git con interfaz web)
+  # Se provisiona segundo para que el repositorio esté listo
+  # antes de que Jenkins intente conectarse a él
+  # ============================================================
+  config.vm.define "gitea" do |gitea|
+    gitea.vm.hostname = config_data['gitea']['hostname']
+    gitea.vm.network "private_network", ip: config_data['gitea']['ip']
+    gitea.vm.network "forwarded_port", guest: config_data['gitea']['port_guest'],
+                                       host: config_data['gitea']['port_host']
+
+    gitea.vm.provider "virtualbox" do |vb|
+      vb.name   = "PE03-gitea"
+      vb.memory = config_data['gitea']['ram']
+      vb.cpus   = config_data['gitea']['cpu']
+    end
+
+    # Provisioning con variables de entorno desde config.yml
+    gitea.vm.provision "shell", path: "scripts/common.sh"
+    gitea.vm.provision "shell", path: "scripts/gitea.sh", env: {
+      "GITEA_ADMIN_USER"     => config_data['gitea']['admin_user'],
+      "GITEA_ADMIN_PASSWORD" => config_data['gitea']['admin_password'],
+      "GITEA_ADMIN_EMAIL"    => config_data['gitea']['admin_email'],
+      "GITEA_REPO_NAME"      => config_data['gitea']['repo_name'],
+      "GITEA_IP"             => config_data['gitea']['ip'],
+      "JENKINS_IP"           => config_data['jenkins']['ip'],
+      "JENKINS_PORT"         => config_data['jenkins']['port_guest'].to_s,
+      "DEPLOY_IP"            => config_data['deploy']['ip']
+    }
+  end
+
+  # ============================================================
+  # VM 3: Jenkins (Servidor CI/CD)
+  # Se provisiona último para que Gitea y Deploy ya estén listos
+  # Configura el pipeline automáticamente
+  # ============================================================
+  config.vm.define "jenkins" do |jenkins|
+    jenkins.vm.hostname = config_data['jenkins']['hostname']
+    jenkins.vm.network "private_network", ip: config_data['jenkins']['ip']
+    jenkins.vm.network "forwarded_port", guest: config_data['jenkins']['port_guest'],
+                                         host: config_data['jenkins']['port_host']
+
+    jenkins.vm.provider "virtualbox" do |vb|
+      vb.name   = "PE03-jenkins"
+      vb.memory = config_data['jenkins']['ram']
+      vb.cpus   = config_data['jenkins']['cpu']
+    end
+
+    # Provisioning con variables de entorno desde config.yml
+    jenkins.vm.provision "shell", path: "scripts/common.sh"
+    jenkins.vm.provision "shell", path: "scripts/jenkins.sh", env: {
+      "JENKINS_ADMIN_USER"     => config_data['jenkins']['admin_user'],
+      "JENKINS_ADMIN_PASSWORD" => config_data['jenkins']['admin_password'],
+      "GITEA_IP"               => config_data['gitea']['ip'],
+      "GITEA_PORT"             => config_data['gitea']['port_guest'].to_s,
+      "GITEA_REPO_NAME"        => config_data['gitea']['repo_name'],
+      "GITEA_ADMIN_USER"       => config_data['gitea']['admin_user'],
+      "GITEA_ADMIN_PASSWORD"   => config_data['gitea']['admin_password'],
+      "DEPLOY_IP"              => config_data['deploy']['ip']
+    }
+  end
+
+end
